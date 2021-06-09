@@ -1,0 +1,4 @@
+.vscode/
+settings.ts
+database.db
+framework/*
