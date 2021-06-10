@@ -14,11 +14,11 @@ export default class interactionCreate extends Listener {
 	}
 
 	async exec(data: Interaction, member: DiscordenoMember) {
-		if (data.type === DiscordInteractionTypes.ApplicationCommand) {
-			this.client.commandHandler.handleCommand(
-				data as unknown as naticoInteraction
-			);
-		}
+		// if (data.type === DiscordInteractionTypes.ApplicationCommand) {
+		// 	this.client.commandHandler.handleCommand(
+		// 		data as unknown as naticoInteraction
+		// 	);
+		// }
 		if (data.type === DiscordInteractionTypes.Button) {
 			await this.client.util.processButtonCollectors(data, member);
 		}

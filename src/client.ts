@@ -10,6 +10,7 @@ import {
 	NaticoCommandHandler,
 	NaticoTaskHandler,
 	NaticoListenerHandler,
+	NaticoInhibitorHandler,
 } from '../deps.ts';
 import { ClientUtil } from '../lib/ClientUtil.ts';
 export class NaticoClient extends nClient {
@@ -33,13 +34,14 @@ export class NaticoClient extends nClient {
 	listenerHandler: NaticoListenerHandler = new NaticoListenerHandler(this, {
 		directory: join(Deno.cwd(), 'src', 'listeners'),
 	});
+	inhibitorHandler: NaticoInhibitorHandler = new NaticoInhibitorHandler(this, {
+		directory: join(Deno.cwd(), 'src', 'inhibitors'),
+	});
 	commandHandler: NaticoCommandHandler = new NaticoCommandHandler(this, {
 		directory: join(Deno.cwd(), 'src', 'commands'),
 		cooldown: 5000, // 5 seconds
 		guildonly: true,
-		prefix: () => {
-			return settings.prefix;
-		},
+		prefix: settings.prefix,
 		owners: settings.ids.owner,
 	});
 	async start() {
@@ -52,6 +54,8 @@ export class NaticoClient extends nClient {
 		await this.commandHandler.loadALL();
 		await this.taskHandler.loadALL();
 		await this.listenerHandler.loadALL();
+		await this.inhibitorHandler.loadALL();
+		this.commandHandler.setInhibitorHandler(this.inhibitorHandler);
 		//-----------------------
 		//------Starters---------
 		//-----------------------

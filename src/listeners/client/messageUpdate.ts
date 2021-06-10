@@ -9,6 +9,6 @@ export default class messageUpdate extends Listener {
 	}
 
 	exec(message: naticoMessage) {
-		this.client.commandHandler.handleCommand(message);
+		// this.client.commandHandler.handleCommand(message);
 	}
 }
