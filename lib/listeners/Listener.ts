@@ -1,2 +1,2 @@
-import { NaticoListener } from '../../deps.ts';
+import { NaticoListener } from "../../deps.ts";
 export default NaticoListener;

@@ -1,2 +1,2 @@
-import { NaticoCommand } from '../../deps.ts';
+import { NaticoCommand } from "../../deps.ts";
 export default NaticoCommand;

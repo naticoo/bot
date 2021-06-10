@@ -1,2 +1,2 @@
-import { NaticoTask } from '../../deps.ts';
+import { NaticoTask } from "../../deps.ts";
 export default NaticoTask;

@@ -9,8 +9,8 @@
 
 ## Natico
 
-Discord deno bot from scratch has slash commands
-Feel free to use this as a base for your own deno bot has pretty good docs for how the handler works,
+Discord deno bot from scratch has slash commands Feel free to use this as a base
+for your own deno bot has pretty good docs for how the handler works,
 
 ## contributing;
 
