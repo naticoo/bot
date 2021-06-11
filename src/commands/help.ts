@@ -1,5 +1,5 @@
 import { NaticoMessage } from "../../lib/NaticoMessage.ts";
-import { ApplicationCommandOption, DiscordenoMessage, Matches } from "../../deps.ts";
+import { ApplicationCommandOption, DiscordenoMessage, Matches, NaticoEmbed } from "../../deps.ts";
 import Command from "../../lib/commands/Command.ts";
 export default class help extends Command {
   constructor() {
@@ -13,63 +13,62 @@ export default class help extends Command {
       category: "general",
       options: [
         {
-          type: 3,
+          type: 7,
           name: "command",
           description: "Command you want help for",
-          match: Matches.rest,
-          customType: (message, content) => content.split(" ")[0],
         },
       ],
     });
   }
-  async exec(message: NaticoMessage, { command }: { command: string }): Promise<DiscordenoMessage | undefined | void> {
-    if (command) {
-      const found = this.handler.findCommand(command);
+  async exec(message: NaticoMessage, a: { command: string }): Promise<DiscordenoMessage | undefined | void> {
+    console.log("TRIGGERED");
+    console.log(a);
+    // if (command) {
+    //   const found = this.handler.findCommand(command);
 
-      if (found) {
-        const embed = this.client.util
-          .embed()
-          .addField("Description »", found.description || "No description")
-          .addField("category »", found.category || "No category");
-        if (found.aliases) {
-          embed.addField("aliases »", found.aliases.map((x) => `\`${x}\``).join(" | "));
-        }
-        if (found.options) {
-          embed.addField(
-            "args »",
-            (found.options as ApplicationCommandOption[])
-              .map((x) => {
-                if (x.name && x.description) {
-                  return `**${x.name}**: ${x.description}`;
-                } else return null;
-              })
-              .join("\n")
-          );
-        }
-        if (found.examples) {
-          embed.addField("examples »", found.examples.map((x) => `\`${x}\``).join(" | "));
-        }
+    //   if (found) {
+    //     const embed = new NaticoEmbed()
+    //       .addField("Description »", found.description || "No description")
+    //       .addField("category »", found.category || "No category");
+    //     if (found.aliases) {
+    //       embed.addField("aliases »", found.aliases.map((x) => `\`${x}\``).join(" | "));
+    //     }
+    //     if (found.options) {
+    //       embed.addField(
+    //         "args »",
+    //         (found.options as ApplicationCommandOption[])
+    //           .map((x) => {
+    //             if (x.name && x.description) {
+    //               return `**${x.name}**: ${x.description}`;
+    //             } else return null;
+    //           })
+    //           .join("\n")
+    //       );
+    //     }
+    //     if (found.examples) {
+    //       embed.addField("examples »", found.examples.map((x) => `\`${x}\``).join(" | "));
+    //     }
 
-        return message?.channel?.send({
-          embed,
-        });
-      }
-    }
-    const embed = this.client.util
-      .embed()
-      .setTitle("Help")
-      .setFooter("Use `l!help` <command> to see more info")
-      .setDescription(
-        "[support](https://discord.com/invite/mY8zTARu4g) - [github](https://skyblockdev.github.io/natico) - [terms](https://skyblockdev.github.io/naticosite/terms.html) - [privacy](https://skyblockdev.github.io/naticosite/privacy.html)"
-      );
-    const commands = [...this.handler.modules.values()]
-      .map((c) => {
-        if (c.category == "dev") return;
-        if (!c.enabled) return;
-        else return `\`${c.name}\``;
-      })
-      .join(" ");
-    embed.addField("commands", commands, false);
-    return await message.reply({ embed });
+    //     return message?.channel?.send({
+    //       embed,
+    //     });
+    //   }
+    // }
+    // const embed = this.client.util
+    //   .embed()
+    //   .setTitle("Help")
+    //   .setFooter("Use `l!help` <command> to see more info")
+    //   .setDescription(
+    //     "[support](https://discord.com/invite/mY8zTARu4g) - [github](https://skyblockdev.github.io/natico) - [terms](https://skyblockdev.github.io/naticosite/terms.html) - [privacy](https://skyblockdev.github.io/naticosite/privacy.html)"
+    //   );
+    // const commands = [...this.handler.modules.values()]
+    //   .map((c) => {
+    //     if (c.category == "dev") return;
+    //     if (!c.enabled) return;
+    //     else return `\`${c.name}\``;
+    //   })
+    //   .join(" ");
+    // embed.addField("commands", commands, false);
+    // return await message.reply({ embed });
   }
 }

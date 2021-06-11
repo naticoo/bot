@@ -1,3 +1,4 @@
 import { NaticoClient } from "./client.ts";
-const client = new NaticoClient();
+import { token } from "../deps.ts";
+const client = new NaticoClient({ intents: ["Guilds", "GuildMessages", "GuildVoiceStates"], token });
 client.start();

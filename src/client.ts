@@ -9,7 +9,7 @@ import {
   NaticoListenerHandler,
   NaticoTaskHandler,
   settings,
-  startBot,
+  NaticoClientOptions,
   token,
 } from "../deps.ts";
 import { ClientUtil } from "../lib/ClientUtil.ts";
@@ -19,8 +19,8 @@ export class NaticoClient extends nClient {
   public librariesio: string;
   public buttonCollectors: Collection<bigint, ButtonCollector>;
   public messageCollectors: Collection<bigint, MessageCollector>;
-  constructor() {
-    super({});
+  constructor(public options?: NaticoClientOptions) {
+    super(options);
     this.librariesio = settings.librariesio;
     this.cache = cache;
     this.id = botId;
@@ -60,12 +60,5 @@ export class NaticoClient extends nClient {
     //------Starters---------
     //-----------------------
     return this.login();
-  }
-  login() {
-    return startBot({
-      token,
-      intents: ["Guilds", "GuildMessages", "GuildVoiceStates"],
-      eventHandlers: this.events,
-    });
   }
 }
