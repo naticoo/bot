@@ -55,9 +55,7 @@ export default class npm extends Command {
     const pages = [];
     let i = 1;
     for (const result of results) {
-      pages.push(
-        this.makeEmbed(result.package).setFooter(`${i}/${results.length}`),
-      );
+      pages.push(this.makeEmbed(result.package).setFooter(`${i}/${results.length}`));
       i++;
     }
     return pages;

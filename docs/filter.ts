@@ -3,7 +3,7 @@ const denodoc = await axiod(
   "https://doc.deno.land/api/docs?entrypoint=https://deno.land/x/discordeno@11.0.0-rc.5/mod.ts",
   {
     method: "get",
-  },
+  }
 );
 interface fn {
   kind: string;
@@ -14,9 +14,7 @@ interface fn {
     line: string;
   };
 }
-const iss = denodoc.data.nodes.filter(
-  (i: fn) => i.kind !== "import" && i.kind !== "interface",
-);
+const iss = denodoc.data.nodes.filter((i: fn) => i.kind !== "import" && i.kind !== "interface");
 const data = new Set();
 iss.forEach((i: fn) => {
   if (i.name) {

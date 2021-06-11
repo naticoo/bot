@@ -1,10 +1,4 @@
-import {
-  botId,
-  DiscordActivityTypes,
-  editBotStatus,
-  white,
-  yellow,
-} from "../../../deps.ts";
+import { botId, DiscordActivityTypes, editBotStatus, white, yellow } from "../../../deps.ts";
 import Listener from "../../../lib/listeners/Listener.ts";
 export default class invite extends Listener {
   constructor() {

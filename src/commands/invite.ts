@@ -15,7 +15,7 @@ export default class invite extends Command {
   }
   async exec(message: NaticoMessage) {
     return await message.reply(
-      `https://discord.com/oauth2/authorize?client_id=${this.client.id}&permissions=117824&scope=bot%20applications.commands`,
+      `https://discord.com/oauth2/authorize?client_id=${this.client.id}&permissions=117824&scope=bot%20applications.commands`
     );
   }
 }

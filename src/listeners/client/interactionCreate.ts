@@ -1,9 +1,4 @@
-import {
-  DiscordenoMember,
-  DiscordInteractionTypes,
-  Interaction,
-  naticoInteraction,
-} from "../../../deps.ts";
+import { DiscordenoMember, DiscordInteractionTypes, Interaction, naticoInteraction } from "../../../deps.ts";
 import Listener from "../../../lib/listeners/Listener.ts";
 export default class interactionCreate extends Listener {
   constructor() {

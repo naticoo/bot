@@ -44,7 +44,7 @@ export class ClientUtil extends cu {
     authorId: bigint,
     embeds: Embed[],
     defaultPage = 1,
-    buttonTimeout = Milliseconds.SECOND * 30,
+    buttonTimeout = Milliseconds.SECOND * 30
   ) {
     if (embeds.length === 0) return;
 
@@ -95,10 +95,7 @@ export class ClientUtil extends cu {
         duration: buttonTimeout,
       });
 
-      if (
-        !collectedButton ||
-        !collectedButton.customId.startsWith(messageId.toString())
-      ) {
+      if (!collectedButton || !collectedButton.customId.startsWith(messageId.toString())) {
         return;
       }
 
@@ -115,25 +112,19 @@ export class ClientUtil extends cu {
             collectedButton.interaction.token,
             {
               type: 6,
-            },
+            }
           );
 
           const question = await sendMessage(
             channelId,
-            "To what page would you like to jump? Say `cancel` or `0` to cancel the prompt.",
+            "To what page would you like to jump? Say `cancel` or `0` to cancel the prompt."
           );
           const answer = await this.needMessage(authorId, channelId);
-          await deleteMessages(channelId, [question.id, answer.id]).catch(
-            console.error,
-          );
+          await deleteMessages(channelId, [question.id, answer.id]).catch(console.error);
 
           const newPageNumber = Math.ceil(Number(answer.content));
 
-          if (
-            isNaN(newPageNumber) ||
-            newPageNumber < 1 ||
-            newPageNumber > embeds.length
-          ) {
+          if (isNaN(newPageNumber) || newPageNumber < 1 || newPageNumber > embeds.length) {
             await sendMessage(channelId, "This is not a valid number!");
             continue;
           }
@@ -147,7 +138,7 @@ export class ClientUtil extends cu {
               messageId: embedMessage.id,
               embeds: [embeds[currentPage - 1]],
               components: createComponents(),
-            },
+            }
           );
 
           continue;
@@ -176,44 +167,34 @@ export class ClientUtil extends cu {
             embeds: [embeds[currentPage - 1]],
             components: createComponents(),
           },
-        },
+        }
       ).catch(console.error);
     }
   }
   async needButton(
     memberId: bigint,
     messageId: bigint,
-    options: ButtonCollectorOptions & { amount?: 1 },
+    options: ButtonCollectorOptions & { amount?: 1 }
   ): Promise<ButtonCollectorReturn>;
   async needButton(
     memberId: bigint,
     messageId: bigint,
-    options: ButtonCollectorOptions & { amount?: number },
+    options: ButtonCollectorOptions & { amount?: number }
   ): Promise<ButtonCollectorReturn[]>;
-  async needButton(
-    memberId: bigint,
-    messageId: bigint,
-  ): Promise<ButtonCollectorReturn>;
-  async needButton(
-    memberId: bigint,
-    messageId: bigint,
-    options?: ButtonCollectorOptions,
-  ) {
+  async needButton(memberId: bigint, messageId: bigint): Promise<ButtonCollectorReturn>;
+  async needButton(memberId: bigint, messageId: bigint, options?: ButtonCollectorOptions) {
     const buttons = await this.collectButtons({
       key: memberId,
       messageId,
       createdAt: Date.now(),
-      filter: options?.filter ||
-        ((_msg, member) => (member ? memberId === member.id : true)),
+      filter: options?.filter || ((_msg, member) => (member ? memberId === member.id : true)),
       amount: options?.amount || 1,
       duration: options?.duration || Milliseconds.MINUTE * 5,
     });
 
     return (options?.amount || 1) > 1 ? buttons : buttons[0];
   }
-  collectButtons(
-    options: CollectButtonOptions,
-  ): Promise<ButtonCollectorReturn[]> {
+  collectButtons(options: CollectButtonOptions): Promise<ButtonCollectorReturn[]> {
     return new Promise((resolve, reject) => {
       this.bot.buttonCollectors.get(options.key);
 
@@ -228,22 +209,15 @@ export class ClientUtil extends cu {
   async needMessage(
     memberId: bigint,
     channelId: bigint,
-    options: MessageCollectorOptions & { amount?: 1 },
+    options: MessageCollectorOptions & { amount?: 1 }
   ): Promise<DiscordenoMessage>;
   async needMessage(
     memberId: bigint,
     channelId: bigint,
-    options: MessageCollectorOptions & { amount?: number },
+    options: MessageCollectorOptions & { amount?: number }
   ): Promise<DiscordenoMessage[]>;
-  async needMessage(
-    memberId: bigint,
-    channelId: bigint,
-  ): Promise<DiscordenoMessage>;
-  async needMessage(
-    memberId: bigint,
-    channelId: bigint,
-    options?: MessageCollectorOptions,
-  ) {
+  async needMessage(memberId: bigint, channelId: bigint): Promise<DiscordenoMessage>;
+  async needMessage(memberId: bigint, channelId: bigint, options?: MessageCollectorOptions) {
     const messages = await this.collectMessages({
       key: memberId,
       channelId,
@@ -255,15 +229,11 @@ export class ClientUtil extends cu {
 
     return (options?.amount || 1) > 1 ? messages : messages[0];
   }
-  collectMessages(
-    options: CollectMessagesOptions,
-  ): Promise<DiscordenoMessage[]> {
+  collectMessages(options: CollectMessagesOptions): Promise<DiscordenoMessage[]> {
     return new Promise((resolve, reject) => {
       this.bot.messageCollectors
         .get(options.key)
-        ?.reject(
-          "A new collector began before the user responded to the previous one.",
-        );
+        ?.reject("A new collector began before the user responded to the previous one.");
 
       this.bot.messageCollectors.set(options.key, {
         ...options,
@@ -273,42 +243,28 @@ export class ClientUtil extends cu {
       });
     });
   }
-  public async processButtonCollectors(
-    data: Omit<Interaction, "member">,
-    member?: DiscordenoMember,
-  ) {
+  public async processButtonCollectors(data: Omit<Interaction, "member">, member?: DiscordenoMember) {
     // All buttons will require a message
     if (!data.message) return;
 
     // If this message is not pending a button response, we can ignore
-    const collector = this.bot.buttonCollectors.get(
-      member ? member.id : snowflakeToBigint(data.message.id),
-    );
+    const collector = this.bot.buttonCollectors.get(member ? member.id : snowflakeToBigint(data.message.id));
     if (!collector) return;
 
     // This message is a response to a collector. Now running the filter function.
-    if (
-      !collector.filter(
-        await structures.createDiscordenoMessage(data.message),
-        member,
-      )
-    ) {
+    if (!collector.filter(await structures.createDiscordenoMessage(data.message), member)) {
       return;
     }
 
     // If the necessary amount has been collected
-    if (
-      collector.amount === 1 ||
-      collector.amount === collector.buttons.length + 1
-    ) {
+    if (collector.amount === 1 || collector.amount === collector.buttons.length + 1) {
       // Remove the collector
       this.bot.buttonCollectors.delete(snowflakeToBigint(data.message.id));
       // Resolve the collector
       return collector.resolve([
         ...collector.buttons,
         {
-          customId: data.data?.customId ||
-            `No customId provided for this button.`,
+          customId: data.data?.customId || `No customId provided for this button.`,
           interaction: data,
           member,
         },

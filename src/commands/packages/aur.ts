@@ -38,15 +38,9 @@ export default class aur extends Command {
       .setColor("#0080ff")
       .addField("❯ Version", result.Version || "no version")
       .addField("❯ Maintainer", result.Maintainer || "no Maintainer")
-      .addField(
-        "❯ Popularity",
-        `${result.Popularity}, no clue but its on the api` || "no Maintainer",
-      )
+      .addField("❯ Popularity", `${result.Popularity}, no clue but its on the api` || "no Maintainer")
       .setDescription(result.Description || "No description provided")
-      .setTitle(
-        `<:arch:844981756246622209> ${result.Name}`,
-        result.URL ?? "https://duckduckgo.com",
-      );
+      .setTitle(`<:arch:844981756246622209> ${result.Name}`, result.URL ?? "https://duckduckgo.com");
   }
   pages(results: any[]) {
     let i = 1;
@@ -60,9 +54,7 @@ export default class aur extends Command {
   async exec(message: NaticoMessage, { arch }: { arch: string }) {
     const pkg = await this.fetch(arch);
     if (!pkg || !pkg?.data?.results[0]) {
-      return message.reply(
-        "<:no:838017092216946748> Please provide a valid AUR package",
-      );
+      return message.reply("<:no:838017092216946748> Please provide a valid AUR package");
     }
     const pages = this.pages(pkg.data.results);
     if (message.isSlash) return message.reply(pages[0]);

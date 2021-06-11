@@ -48,20 +48,13 @@ export default class crate extends Command {
       .setDescription(result.description || "No description provided")
       .addField(
         "❯ repository",
-        `[${result?.repository?.replace("https://", "") ||
-          "No repository"}](${result.repository})` ||
-          "This crate doesnt seem to have a repository",
+        `[${result?.repository?.replace("https://", "") || "No repository"}](${result.repository})` ||
+          "This crate doesnt seem to have a repository"
       )
       .addField("❯ Version", `${result.newest_version || "Unspecified"}`)
       .addField("❯ Install", `\`cargo install ${result.id}\``)
-      .addField(
-        "❯ Downloads",
-        `Total \`${result.downloads}\`\nRecent \`${result.recent_downloads}\``,
-      )
-      .setTitle(
-        `<:cargo:838484116768292905> ${result.name}`,
-        `https://crates.io/crates/${result.id}`,
-      );
+      .addField("❯ Downloads", `Total \`${result.downloads}\`\nRecent \`${result.recent_downloads}\``)
+      .setTitle(`<:cargo:838484116768292905> ${result.name}`, `https://crates.io/crates/${result.id}`);
   }
   pages(results: any) {
     const pages = [];

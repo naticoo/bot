@@ -30,9 +30,7 @@ export default class run extends Command {
         stderr: "piped",
       });
       const rawOutput = await out.output();
-      return message.reply(
-        "out\n```bash\n" + new TextDecoder().decode(rawOutput) + "\n```",
-      );
+      return message.reply("out\n```bash\n" + new TextDecoder().decode(rawOutput) + "\n```");
     } catch (e) {
       message.reply(`${e}`);
     }

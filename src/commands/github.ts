@@ -47,7 +47,7 @@ export default class github extends Command {
       .addField("➥ Stats", stats)
       .setThumbnail(
         user.avatar_url ||
-          "https://cdn.discordapp.com/avatars/838065056096059463/e404cfbe142fc10026e0914530532e55.webp?size=4096",
+          "https://cdn.discordapp.com/avatars/838065056096059463/e404cfbe142fc10026e0914530532e55.webp?size=4096"
       );
   }
   async exec(message: NaticoMessage, { user }: { user: string }) {

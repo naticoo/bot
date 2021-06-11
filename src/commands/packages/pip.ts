@@ -28,10 +28,7 @@ export default class pip extends Command {
       .setColor("#0080ff")
       .addField("❯ Version", result?.versions[0] || "No version")
       .setDescription(result?.summary || "No description provided")
-      .setTitle(
-        `🐍 ${result?.name}`,
-        `https://pypi.org/project/${result.name}`,
-      );
+      .setTitle(`🐍 ${result?.name}`, `https://pypi.org/project/${result.name}`);
   }
   pages(results) {
     const pages = [];

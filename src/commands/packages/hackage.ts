@@ -46,10 +46,7 @@ export default class hackage extends Command {
       .addField("❯ Forks", `${result.forks}` || "no Forks")
       .addField("❯ license", `${result.licenses}` || "no licenses")
       .setDescription(result.description || "No description provided")
-      .setTitle(
-        `<:haskell:850367977412755460> ${result.name}`,
-        result.package_manager_url ?? "https://duckduckgo.com",
-      );
+      .setTitle(`<:haskell:850367977412755460> ${result.name}`, result.package_manager_url ?? "https://duckduckgo.com");
   }
   pages(results: any[]) {
     let i = 1;
@@ -63,9 +60,7 @@ export default class hackage extends Command {
   async exec(message: NaticoMessage, { hackage }: { hackage: string }) {
     const pkg = await this.fetch(hackage);
     if (!pkg || !pkg?.data) {
-      return message.reply(
-        "<:no:838017092216946748> Please provide a valid Hackage package",
-      );
+      return message.reply("<:no:838017092216946748> Please provide a valid Hackage package");
     }
     const pages = this.pages(pkg.data);
     if (message.isSlash) return message.reply(pages[0]);

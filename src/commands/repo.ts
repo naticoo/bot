@@ -13,9 +13,7 @@ export default class repo extends Command {
     });
   }
   async exec(message: naticoMessage) {
-    return await message.reply(
-      "Currently no clue how to use github api to find a repo",
-    );
+    return await message.reply("Currently no clue how to use github api to find a repo");
     // const user = await fetch(`https://api.github.com/users/${message.args}`, {
     // 	method: 'GET',
     // 	headers: {

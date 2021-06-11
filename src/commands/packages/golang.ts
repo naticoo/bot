@@ -50,18 +50,14 @@ export default class golang extends Command {
       .addField("❯ Imports", `${result.import_count || 0}`)
       .addField("❯ synopsis", `${result.synopsis || ".."}`)
       .addField("❯ score", `${result.score?.toFixed(3) || ".."}`)
-      .setTitle(
-        `🦫 ${result.name || "nameless"}`,
-        `https://pkg.go.dev/${result.path}`,
-      );
+      .setTitle(`🦫 ${result.name || "nameless"}`, `https://pkg.go.dev/${result.path}`);
   }
   async exec(message: NaticoMessage, { module }: { module: string }) {
     const pkg = await this.fetch(module);
 
     if (!pkg[0]) {
       return message.reply({
-        content:
-          "<:no:838017092216946748> Please provide a valid golang package",
+        content: "<:no:838017092216946748> Please provide a valid golang package",
       });
     }
 

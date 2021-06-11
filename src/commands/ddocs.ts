@@ -26,7 +26,7 @@ export default class ddoc extends Command {
   async fetch(q: string) {
     const denodoc = await axiod(
       "https://gist.githubusercontent.com/SkyBlockDev/aa24237591b296c528a322d4a352199f/raw/5d365841be7611f046315653bd5555eabade6d65/denodocs.json",
-      { method: "get" },
+      { method: "get" }
     );
     const fuse = new Fuse(denodoc.data, { keys: ["name"] });
 
@@ -39,18 +39,12 @@ export default class ddoc extends Command {
       .embed()
       .setColor("#FF0000")
       .setDescription(result.jsDoc || `No jsdoc`)
-      .addField(
-        "❯ src",
-        `[${result.location.filename.replace("https://", "")}](${srcUrl})`,
-      )
+      .addField("❯ src", `[${result.location.filename.replace("https://", "")}](${srcUrl})`)
       .addField(
         "❯ doc link",
-        `[doc.deno.land/${baseUrl}#${result.name}](https://doc.deno.land/${baseUrl}#${result.name})`,
+        `[doc.deno.land/${baseUrl}#${result.name}](https://doc.deno.land/${baseUrl}#${result.name})`
       )
-      .setTitle(
-        `<:dd:847527964208005160>  ${result.name}`,
-        `https://doc.deno.land/https${baseUrl}#${result.name}`,
-      )
+      .setTitle(`<:dd:847527964208005160>  ${result.name}`, `https://doc.deno.land/https${baseUrl}#${result.name}`)
       .setColor("#1F85DE");
   }
   pages(results) {
@@ -58,9 +52,7 @@ export default class ddoc extends Command {
     const pages = [];
     let i = 1;
     for (const result of results) {
-      pages.push(
-        this.makeEmbed(result.item).setFooter(`${i}/${results.length}`),
-      );
+      pages.push(this.makeEmbed(result.item).setFooter(`${i}/${results.length}`));
       i++;
     }
     return pages;

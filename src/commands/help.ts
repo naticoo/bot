@@ -1,9 +1,5 @@
 import { NaticoMessage } from "../../lib/NaticoMessage.ts";
-import {
-  ApplicationCommandOption,
-  DiscordenoMessage,
-  Matches,
-} from "../../deps.ts";
+import { ApplicationCommandOption, DiscordenoMessage, Matches } from "../../deps.ts";
 import Command from "../../lib/commands/Command.ts";
 export default class help extends Command {
   constructor() {
@@ -26,10 +22,7 @@ export default class help extends Command {
       ],
     });
   }
-  async exec(
-    message: NaticoMessage,
-    { command }: { command: string },
-  ): Promise<DiscordenoMessage | undefined | void> {
+  async exec(message: NaticoMessage, { command }: { command: string }): Promise<DiscordenoMessage | undefined | void> {
     if (command) {
       const found = this.handler.findCommand(command);
 
@@ -39,10 +32,7 @@ export default class help extends Command {
           .addField("Description »", found.description || "No description")
           .addField("category »", found.category || "No category");
         if (found.aliases) {
-          embed.addField(
-            "aliases »",
-            found.aliases.map((x) => `\`${x}\``).join(" | "),
-          );
+          embed.addField("aliases »", found.aliases.map((x) => `\`${x}\``).join(" | "));
         }
         if (found.options) {
           embed.addField(
@@ -53,14 +43,11 @@ export default class help extends Command {
                   return `**${x.name}**: ${x.description}`;
                 } else return null;
               })
-              .join("\n"),
+              .join("\n")
           );
         }
         if (found.examples) {
-          embed.addField(
-            "examples »",
-            found.examples.map((x) => `\`${x}\``).join(" | "),
-          );
+          embed.addField("examples »", found.examples.map((x) => `\`${x}\``).join(" | "));
         }
 
         return message?.channel?.send({
@@ -73,7 +60,7 @@ export default class help extends Command {
       .setTitle("Help")
       .setFooter("Use `l!help` <command> to see more info")
       .setDescription(
-        "[support](https://discord.com/invite/mY8zTARu4g) - [github](https://skyblockdev.github.io/natico) - [terms](https://skyblockdev.github.io/naticosite/terms.html) - [privacy](https://skyblockdev.github.io/naticosite/privacy.html)",
+        "[support](https://discord.com/invite/mY8zTARu4g) - [github](https://skyblockdev.github.io/natico) - [terms](https://skyblockdev.github.io/naticosite/terms.html) - [privacy](https://skyblockdev.github.io/naticosite/privacy.html)"
       );
     const commands = [...this.handler.modules.values()]
       .map((c) => {

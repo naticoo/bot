@@ -15,8 +15,7 @@ export default class oss extends Command {
   }
   async exec(message: NaticoMessage) {
     await message.channel?.send({
-      content: "Yes im opensource you can find my source code at " +
-        settings.repo,
+      content: "Yes im opensource you can find my source code at " + settings.repo,
     });
   }
 }

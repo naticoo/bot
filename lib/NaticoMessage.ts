@@ -58,9 +58,7 @@ export class NaticoMessage {
       this.channelId = interaction?.channelId!;
       /* Note to get member use the initialize function */
       this.authorId = interaction?.user?.id!;
-      this.tag = `${interaction?.member!.user.username}#${
-        interaction?.member!.user.discriminator
-      }`;
+      this.tag = `${interaction?.member!.user.username}#${interaction?.member!.user.discriminator}`;
       this.token = interaction?.token || undefined!;
       this.name = interaction?.data?.name || undefined!;
     }
@@ -93,9 +91,7 @@ export class NaticoMessage {
       return this.replyInteraction(...args);
     }
   }
-  async replyInteraction(
-    data: InteractionApplicationCommandCallbackData,
-  ): Promise<void> {
+  async replyInteraction(data: InteractionApplicationCommandCallbackData): Promise<void> {
     return await sendInteractionResponse(BigInt(this.id), this!.token!, {
       type: 4,
       data,
@@ -107,14 +103,11 @@ export class NaticoMessage {
       BigInt(this.channelId),
       BigInt(this.authorId),
       pages,
-      ...args,
+      ...args
     );
   }
   async initialize() {
-    this.member = await structures.createDiscordenoMember(
-      this.interaction.member!,
-      BigInt(this.interaction.guildId),
-    );
+    this.member = await structures.createDiscordenoMember(this.interaction.member!, BigInt(this.interaction.guildId));
     this.tag = this.member.tag;
   }
 }

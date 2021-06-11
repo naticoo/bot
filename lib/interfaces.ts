@@ -43,9 +43,7 @@ export interface naticoUser {}
  * @param data - Slash command data to be send in the reply
  * @returns - Void
  */
-export type naticoReply = (
-  data: InteractionApplicationCommandCallbackData
-) => Promise<void>;
+export type naticoReply = (data: InteractionApplicationCommandCallbackData) => Promise<void>;
 export type naticoEdit = (data: any) => Promise<void>;
 
 export interface CollectMessagesOptions extends BaseCollectorCreateOptions {

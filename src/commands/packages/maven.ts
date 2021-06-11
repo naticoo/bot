@@ -46,10 +46,7 @@ export default class maven extends Command {
       .addField("❯ Forks", `${result.forks}` || "no Forks")
       .addField("❯ license", `${result.licenses}` || "no licenses")
       .setDescription(result.description || "No description provided")
-      .setTitle(
-        `<:java:850370699440947240> ${result.name}`,
-        result.package_manager_url ?? "https://duckduckgo.com",
-      );
+      .setTitle(`<:java:850370699440947240> ${result.name}`, result.package_manager_url ?? "https://duckduckgo.com");
   }
   pages(results: any[]) {
     let i = 1;
@@ -63,9 +60,7 @@ export default class maven extends Command {
   async exec(message: NaticoMessage, { maven }: { maven: string }) {
     const pkg = await this.fetch(maven);
     if (!pkg || !pkg?.data) {
-      return message.reply(
-        "<:no:838017092216946748> Please provide a valid maven package",
-      );
+      return message.reply("<:no:838017092216946748> Please provide a valid maven package");
     }
     const pages = this.pages(pkg.data);
     if (message.isSlash) return message.reply(pages[0]);

@@ -1,8 +1,4 @@
-import {
-  DiscordenoMessage,
-  NaticoCommand,
-  NaticoInhibitor,
-} from "../../deps.ts";
+import { DiscordenoMessage, NaticoCommand, NaticoInhibitor } from "../../deps.ts";
 export default class bad extends NaticoInhibitor {
   constructor() {
     super("bad", {
@@ -10,10 +6,7 @@ export default class bad extends NaticoInhibitor {
     });
   }
 
-  exec(
-    _message: DiscordenoMessage,
-    _command: NaticoCommand,
-  ): Promise<boolean> | boolean {
+  exec(_message: DiscordenoMessage, _command: NaticoCommand): Promise<boolean> | boolean {
     // console.log(command.id);
     // await message.reply('Hello world!');
     // return true;
